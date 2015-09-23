@@ -17,7 +17,10 @@ namespace Folio
         {
             //WindowsAzure.Table.EntityConverters.TypeData.EntityTypeMap.RegisterAssembly(typeof(Program).Assembly);
             //Crawl();
+            Console.WriteLine("Finished crawling");
+
             Parse();
+            Console.WriteLine("Finished parsing");
             Console.ReadKey();
 
         }
@@ -29,24 +32,43 @@ namespace Folio
                 from record in crawler.Execute()
                 select record.ToString();
 
-            System.IO.File.AppendAllLines("records.txt", records);
+            System.IO.File.WriteAllLines("records.txt", records);
         }
 
         private static void Parse()
         {
             var parser = new DateParser();
-            var lines =
+            var records =
                 from line in System.IO.File.ReadAllLines("records.txt")
-                where parser.GetDateTag(line) == null
-                select line;
+                    //where parser.GetDateTag(line) == null
+                select new
+                {
+                    Line = line,
+                    DateTag = parser.GetDateTag(line)
+                };
 
-            Console.WriteLine("Not found: {0}", lines.Count());
-            System.IO.File.WriteAllLines("unknown.txt", lines);
-            lines =
-                from line in System.IO.File.ReadAllLines("records.txt")
-                where parser.GetDateTag(line) != null
-                select line;
-            Console.WriteLine("Detected: {0}", lines.Count());
+            var notFound =
+                from record in records
+                where record.DateTag == null
+                select record.Line;
+
+            Console.WriteLine("Not found: {0}", notFound.Count());
+            System.IO.File.WriteAllLines("unknown.txt", notFound);
+
+            var found = 
+                from record in records
+                where record.DateTag != null
+                select record.Line;
+            Console.WriteLine("Detected: {0}", found.Count());
+
+            foreach (var record in records)
+            {
+                if (record.DateTag == null)
+                    continue;
+
+                if (record.DateTag == "19970526")
+                    Console.WriteLine(record.Line);
+            }
         }
 
         private static IEnumerable<ICrawler> Crawlers

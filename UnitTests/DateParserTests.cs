@@ -30,14 +30,32 @@ namespace UnitTests
         [InlineData("20101121", "Даршан Шрила Гурудева Ноябрь 21-2010")]
         [InlineData("20101121", "Darshan 21 November 2010")]
         [InlineData("19960622", "Srila Narayana Goswami Maharaja's Lecture!996/06/22 Fullerton California")]
-        //[InlineData("", "")]
-        //[InlineData("", "")]
+
+        [InlineData("20040127", "2004 Vyasa Puja  1 27 04 Play Pandavas")]
+        [InlineData("20040127", "2004 Vyasa Puja Tape 7 Class 1_27_04_PM P2")]
+        [InlineData("19911008", "1991108_Mathura Extraordinary Explanation of Anyabhilasita")]
+        [InlineData("20050616", "AUDIO Badger 05JUN16 --- Morning walk - Most confidential")]
+        [InlineData("20070326", "07_March_26_pm_part_1_Mathura.wmv")]
+        [InlineData("19960630", "No CA Oakland Arrival June 30 96")]
+        [InlineData("19960713", "NY Arrival July 13 96")]
+        [InlineData("20081224", "24-12-08 Christmas Hari Nama in Hong Kong")]
+        [InlineData("20090922", "Footage taken 22 Sept 2009")]
+        [InlineData("20091006", "6 October, 2009. Today")]
+        [InlineData("19961023", "10 23 96 BVN Gaudiya Math 01 final")]
         //[InlineData("", "")]
         //[InlineData("", "")]
         //[InlineData("", "")]
 
 
+        // Multiple dates
         //[InlineData("", "1998/12/20-21 Bali")]
+        //[InlineData("", "199803 10 11 12 GM Parikrama Jahnudvip")]
+
+        //Indefinite
+        //[InlineData("", "199711004 Varshana Darshan PM Disp Srila AC Bhaktivedanta Swami")]
+        //[InlineData("", "2005121pm")]
+
+
 
 
         //[InlineData("200506", "Srila Bhaktivedanta Narayana Maharaja - Badger, CA USA - June 2005")]

@@ -33,7 +33,7 @@ namespace Folio
                 };
                 yield return new YouTubeSource
                 {
-                    PlaylistId = "PURLxpoBLZs5QDCUcmQlijHA",
+                    PlaylistId = "UURLxpoBLZs5QDCUcmQlijHA",
                     Comment = "isadas",
                 };
 
@@ -46,7 +46,12 @@ namespace Folio
                     SecondaryLanguage = "RUS",
                     SecondaryLanguageType = LanguageType.Voiceover,
                 };
-                
+                yield return new YouTubeSource
+                {
+                    PlaylistId = "PL67AF8198D0E0CBEF",
+                    Comment = "krsnakarunya, Sri Vraja Mandal Parikrama Series",
+                };
+
             }
         }
     }
