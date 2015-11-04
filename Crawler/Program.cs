@@ -75,6 +75,7 @@ namespace Folio
         {
             get
             {
+                yield return new SbnmcdCrawler();
                 foreach (var youtubeSource in YouTubeSource.All)
                     yield return new YouTubeCrawler(youtubeSource);
             }

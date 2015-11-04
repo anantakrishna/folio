@@ -22,7 +22,7 @@ namespace Folio
 
         public override string ToString()
         {
-            return String.Format("{0} {1} {2}|{3}", Source, Id, Title, Description.Replace("\r\n", "").Replace("\r", "").Replace("\n", ""));
+            return String.Format("{0} {1} {2}|{3}", Source, Id, Title, (Description ?? String.Empty).Replace("\r\n", "").Replace("\r", "").Replace("\n", ""));
         }
     }
 
