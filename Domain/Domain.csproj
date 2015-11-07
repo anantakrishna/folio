@@ -40,8 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MultiDateParser.cs" />
     <Compile Include="DateParser.cs" />
     <Compile Include="LanguageType.cs" />
+    <Compile Include="Parsing\IDateTagExtractor.cs" />
+    <Compile Include="Parsing\IntervalDateExtractor.cs" />
+    <Compile Include="Parsing\SingleDateExtractor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecordType.cs" />
     <Compile Include="Resource.cs" />
