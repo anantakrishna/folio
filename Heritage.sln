@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{CE543DA5-55A8-4166-880C-69CD562C1FD3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Storage", "Storage\Storage.csproj", "{DCDF8DCF-528A-45BF-A908-481A843A9E50}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{CE543DA5-55A8-4166-880C-69CD562C1FD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE543DA5-55A8-4166-880C-69CD562C1FD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE543DA5-55A8-4166-880C-69CD562C1FD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCDF8DCF-528A-45BF-A908-481A843A9E50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCDF8DCF-528A-45BF-A908-481A843A9E50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCDF8DCF-528A-45BF-A908-481A843A9E50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCDF8DCF-528A-45BF-A908-481A843A9E50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

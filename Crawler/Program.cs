@@ -1,13 +1,7 @@
-﻿using Microsoft.Azure.WebJobs;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Table;
+﻿using Folio.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using WindowsAzure.Table;
 
 namespace Folio
 {
@@ -19,7 +13,7 @@ namespace Folio
             Crawl();
             Console.WriteLine("Finished crawling");
 
-            Parse();
+            //Parse();
             Console.WriteLine("Finished parsing");
             Console.ReadKey();
 
@@ -30,9 +24,12 @@ namespace Folio
             var records =
                 from crawler in Crawlers
                 from record in crawler.Execute()
-                select record.ToString();
+                select record;
 
-            System.IO.File.WriteAllLines("records.txt", records);
+            using (var repository = new RecordRepository())
+            {
+                repository.Add(records);
+            }
         }
 
         private static void Parse()
