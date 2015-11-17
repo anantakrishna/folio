@@ -10,6 +10,14 @@ namespace Folio
         public LanguageType PrimaryLanguageType { get; set; }
         public LanguageType SecondaryLanguageType { get; set; }
 
+        public string SourceId
+        {
+            get
+            {
+                return string.Format("https://www.youtube.com/playlist?list={0}", PlaylistId);
+            }
+        }
+
         public static IEnumerable<YouTubeSource> All
         {
             get

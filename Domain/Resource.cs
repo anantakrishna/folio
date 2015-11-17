@@ -20,10 +20,7 @@ namespace Folio
         public LanguageType PrimaryLanguageType { get; set; }
         public LanguageType SecondaryLanguageType { get; set; }
 
-        public override string ToString()
-        {
-            return String.Format("{0} {1} {2}|{3}", Source, Id, Title, (Description ?? String.Empty).Replace("\r\n", "").Replace("\r", "").Replace("\n", ""));
-        }
+        public IEnumerable<string> DateTags { get; set; }
     }
 
 }

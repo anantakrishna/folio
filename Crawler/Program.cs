@@ -9,12 +9,8 @@ namespace Folio
     {
         static void Main()
         {
-            //WindowsAzure.Table.EntityConverters.TypeData.EntityTypeMap.RegisterAssembly(typeof(Program).Assembly);
             Crawl();
             Console.WriteLine("Finished crawling");
-
-            //Parse();
-            Console.WriteLine("Finished parsing");
             Console.ReadKey();
 
         }
@@ -30,32 +26,6 @@ namespace Folio
             {
                 repository.Add(records);
             }
-        }
-
-        private static void Parse()
-        {
-            var parser = new DateParser();
-            var records =
-                from line in System.IO.File.ReadAllLines("records.txt")
-                select new
-                {
-                    Line = line,
-                    DateTags = parser.GetDateTags(line)
-                };
-
-            var notFound =
-                from record in records
-                where !record.DateTags.Any()
-                select record.Line;
-
-            Console.WriteLine("Not found: {0}", notFound.Count());
-            System.IO.File.WriteAllLines("unknown.txt", notFound);
-
-            var found = 
-                from record in records
-                where record.DateTags.Any()
-                select record.Line;
-            Console.WriteLine("Detected: {0}", found.Count());
         }
 
         private static IEnumerable<ICrawler> Crawlers

@@ -41,20 +41,31 @@ namespace Folio
                 from videoIdChunk in GetPlaylistVideoIds(playlistId)
                 from videoChunk in GetVideo(videoIdChunk, "snippet,recordingDetails,contentDetails")
                 from video in videoChunk
-                select new YouTubeResource
+                select new Resource
                 {
+                    Source = source.SourceId,
+                    Type = RecordType.Video,
                     Id = video.Id,
+                    Url = new Uri(String.Format("https://www.youtube.com/watch?v={0}", video.Id)),
                     PrimaryLanguage = source.PrimaryLanguage,
                     PrimaryLanguageType = source.PrimaryLanguageType,
                     SecondaryLanguage = source.SecondaryLanguage,
                     SecondaryLanguageType = source.SecondaryLanguageType,
                     Title = video.Snippet.Title,
                     Description = video.Snippet.Description,
-                    Channel = video.Snippet.ChannelId,
-                    RecordingDate = video.RecordingDetails != null ? video.RecordingDetails.RecordingDate : null,
-                    RecordingPlace = video.RecordingDetails != null ? video.RecordingDetails.LocationDescription : null,
-                    Duration = video.ContentDetails.Duration,
+                    DateTags = GetDateTags(video).Distinct().ToArray(),
                 };
+        }
+
+        static readonly DateParser dateParser = new DateParser();
+        private static IEnumerable<string> GetDateTags(Video video)
+        {
+            if (video.Snippet != null)
+                foreach (var tag in dateParser.GetDateTags(video.Snippet.Title + video.Snippet.Description))
+                    yield return tag;
+
+            if (video.RecordingDetails != null && video.RecordingDetails.RecordingDate.HasValue)
+                yield return video.RecordingDetails.RecordingDate.Value.ToString("yyyyMMdd");
         }
 
         static YouTubeService youtubeService = new YouTubeService(new BaseClientService.Initializer

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Folio.Storage
 {
-    public class RecordRepository : IDisposable
+    public class RecordRepository : IDisposable, IResourceRepository
     {
         private readonly LuceneDataProvider provider;
         private readonly IDocumentMapper<Resource> mapper;
@@ -43,18 +43,28 @@ namespace Folio.Storage
             }
         }
 
+        public IQueryable<Resource> Query
+        {
+            get
+            {
+                return provider.AsQueryable(mapper);
+            }
+            
+        }
+
         private static ClassMap<Resource> CreateMap()
         {
             var map = new ClassMap<Resource>(LuceneVersion);
-            map.Key(r => r.Url).NotAnalyzed();
+            map.Key(r => r.Url).NotAnalyzedNoNorms();
             map.Property(r => r.Source).NotAnalyzedNoNorms();
             map.Property(r => r.Title);
             map.Property(r => r.Description);
-            map.Property(r => r.Type).AnalyzeWith(new KeywordAnalyzer());
+            map.Property(r => r.Type).NotAnalyzedNoNorms();
             map.Property(r => r.PrimaryLanguage).NotAnalyzedNoNorms();
             map.Property(r => r.PrimaryLanguageType).NotAnalyzedNoNorms();
             map.Property(r => r.SecondaryLanguage).NotAnalyzedNoNorms();
             map.Property(r => r.SecondaryLanguageType).NotAnalyzedNoNorms();
+            map.Property(r => r.DateTags).ToField("DateTag");
             return map;
         }
     }

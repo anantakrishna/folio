@@ -31,6 +31,7 @@ namespace Folio
             var doc = new HtmlDocument();
             doc.LoadHtml(source);
 
+            var parser = new DateParser();
             return
                 from link in doc.DocumentNode.SelectNodes("//tr[@class='file_bg1']//a")
                 let url = new Uri(rootUrl, link.Attributes["href"].Value)
@@ -41,6 +42,7 @@ namespace Folio
                     Title = link.InnerText,
                     Type = RecordType.Audio,
                     Source = SourceName,
+                    DateTags = parser.GetDateTags(link.InnerText),
                 };
         }
     }
