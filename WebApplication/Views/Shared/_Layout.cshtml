@@ -28,19 +28,42 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink(Resources.CalendarTitle, "Years", "Calendar")</li>
+                    <li>@Html.ActionLink(Resources.AboutTitle, "About", "Home")</li>
+                    <li>@Html.ActionLink(Resources.ContactTitle, "Contact", "Home")</li>
                 </ul>
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="input-group" style="width: 200px;">
+                        <input type="text" class="form-control" placeholder="@Resources.SearchPlaceholder" id="query">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit" aria-label="@Resources.SearchButton"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                        </span>
+                    </div>
+                </form>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
     <div class="container body-content">
+        @if (ViewBag.Breadcrumbs is IEnumerable<MenuItem>)
+        {
+            <ol class="breadcrumb">
+                @foreach (var item in (IEnumerable<MenuItem>)ViewBag.Breadcrumbs)
+                {
+                    <li><a href="@item.Url">@item.Label</a></li>
+                }
+                <li class="active">@ViewBag.Title</li>
+            </ol>
+        }
+        @if (!String.IsNullOrWhiteSpace(ViewBag.Title))
+        {
+            <div class="page-header">
+                <h1>@ViewBag.Title</h1>
+            </div>
+        }
         @RenderBody()
         <hr />
-        <footer>
-        </footer>
+        <footer></footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")

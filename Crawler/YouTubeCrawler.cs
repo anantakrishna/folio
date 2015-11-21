@@ -57,15 +57,14 @@ namespace Folio
                 };
         }
 
-        static readonly DateParser dateParser = new DateParser();
-        private static IEnumerable<string> GetDateTags(Video video)
+        private static IEnumerable<DateTag> GetDateTags(Video video)
         {
             if (video.Snippet != null)
-                foreach (var tag in dateParser.GetDateTags(video.Snippet.Title + video.Snippet.Description))
+                foreach (var tag in DateTag.Find(video.Snippet.Title + video.Snippet.Description))
                     yield return tag;
 
             if (video.RecordingDetails != null && video.RecordingDetails.RecordingDate.HasValue)
-                yield return video.RecordingDetails.RecordingDate.Value.ToString("yyyyMMdd");
+                yield return DateTag.FromDate(video.RecordingDetails.RecordingDate.Value);
         }
 
         static YouTubeService youtubeService = new YouTubeService(new BaseClientService.Initializer

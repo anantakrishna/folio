@@ -1,0 +1,15 @@
+﻿@model IEnumerable<Folio.Web.CalendarItem>
+
+<div class="container">
+    <div class="row">
+        <div class="list-group col-md-4 col-lg-offset-4">
+            @foreach (var item in Model)
+            {
+                <a class="list-group-item" href="@item.Url">
+                    @item.Label
+                    <span class="badge">@item.RecordCount</span>
+                </a>
+            }
+        </div>
+    </div>
+</div>

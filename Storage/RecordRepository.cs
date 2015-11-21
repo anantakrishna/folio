@@ -2,6 +2,7 @@
 using Lucene.Net.Linq;
 using Lucene.Net.Linq.Fluent;
 using Lucene.Net.Linq.Mapping;
+using Lucene.Net.Search;
 using Lucene.Net.Store;
 using System;
 using System.Collections.Generic;
@@ -50,6 +51,24 @@ namespace Folio.Storage
                 return provider.AsQueryable(mapper);
             }
             
+        }
+
+        public IQueryable<Resource> ByDateTag(DateTag tag, DateTag.Matching matching)
+        {
+            var term = new Lucene.Net.Index.Term("DateTag", tag);
+            Query query;
+            switch (matching)
+            {
+                case DateTag.Matching.Exact:
+                    query = new TermQuery(term);
+                    break;
+
+                case DateTag.Matching.Inclusive:
+                default:
+                    query = new PrefixQuery(term);
+                    break;
+            }
+            return provider.AsQueryable(mapper).Where(query);
         }
 
         private static ClassMap<Resource> CreateMap()

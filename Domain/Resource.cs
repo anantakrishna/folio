@@ -20,7 +20,7 @@ namespace Folio
         public LanguageType PrimaryLanguageType { get; set; }
         public LanguageType SecondaryLanguageType { get; set; }
 
-        public IEnumerable<string> DateTags { get; set; }
+        public IEnumerable<DateTag> DateTags { get; set; }
     }
 
 }

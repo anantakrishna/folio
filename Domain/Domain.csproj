@@ -40,7 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DateParser.cs" />
+    <Compile Include="DateTag.cs" />
+    <Compile Include="DateTagTypeConverter.cs" />
     <Compile Include="IResourceRepository.cs" />
     <Compile Include="LanguageType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

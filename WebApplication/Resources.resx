@@ -117,11 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AboutTitle" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="CalendarTitle" xml:space="preserve">
+    <value>Calendar</value>
+  </data>
+  <data name="ContactTitle" xml:space="preserve">
+    <value>Contact</value>
+  </data>
   <data name="NotImplemented" xml:space="preserve">
     <value>This it not implemented yet.</value>
   </data>
   <data name="ProjectTitle" xml:space="preserve">
     <value>Srila Gurudeva Folio</value>
+  </data>
+  <data name="SearchButton" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="SearchPlaceholder" xml:space="preserve">
+    <value>Search for…</value>
   </data>
   <data name="WelcomeText" xml:space="preserve">
     <value>Hare Krishna! Welcome to Srila Gurudeva Folio.</value>
