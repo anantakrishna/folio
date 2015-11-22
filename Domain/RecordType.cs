@@ -8,6 +8,7 @@ namespace Folio
 {
     public enum RecordType
     {
+        Unknown,
         Video,
         Audio,
         Text,

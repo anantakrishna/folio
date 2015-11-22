@@ -58,7 +58,7 @@ namespace Folio.Web.Controllers
                 from day in Enumerable.Range(1, DateTime.DaysInMonth(year, month))
                 select new CalendarItem
                 {
-                    Url = Url.Action("Index", "Records", new { Year = year, Month = month, Day = day }),
+                    Url = Url.Action("Index", "Record", new { Year = year, Month = month, Day = day }),
                     Label = day.ToString(),
                     RecordCount = repository.ByDateTag(DateTag.FromDate(year, month, day), DateTag.Matching.Inclusive).Count(),
                 };

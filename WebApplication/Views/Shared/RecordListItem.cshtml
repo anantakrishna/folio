@@ -1,0 +1,17 @@
+﻿@model Folio.Resource
+
+<a href="@Model.Url.AbsoluteUri" target="_blank" class="list-group-item">
+
+    <div class="data f16">
+        <h4><span class="fa fa-@Html.RecordTypeIcon(Model.Type)" aria-hidden="true"></span>&nbsp;@Model.Title</h4>
+        <p>@Model.Description</p>
+
+        <p><small>@Model.Url.ToString() <i class="fa fa-external-link"></i></small></p>
+
+        @foreach (var tag in Model.DateTags)
+        {
+            <span class="label label-default"><i class="fa fa-calendar"></i>&nbsp;@tag.ToString()</span>
+        }
+
+    </div>
+</a>

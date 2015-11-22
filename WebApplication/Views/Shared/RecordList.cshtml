@@ -1,0 +1,8 @@
+﻿@model IEnumerable<Folio.Resource>
+
+<div class="list-group">
+    @foreach (var item in Model)
+    {
+        Html.RenderPartial("RecordListItem", item);
+    }
+</div>
