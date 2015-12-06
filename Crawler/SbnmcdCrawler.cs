@@ -14,7 +14,7 @@ namespace Folio
         {
             get
             {
-                return "http://sbnmcd.org crawler";
+                return "sbnmcd.org";
             }
         }
 

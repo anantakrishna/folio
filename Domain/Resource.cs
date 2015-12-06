@@ -13,6 +13,7 @@ namespace Folio
         public virtual Uri Url { get; set; }
         public virtual string Title { get; set; }
         public virtual string Description { get; set; }
+        public virtual string Text { get; set; }
         public virtual RecordType Type { get; set; }
 
         public string PrimaryLanguage { get; set; }

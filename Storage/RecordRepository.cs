@@ -84,6 +84,7 @@ namespace Folio.Storage
             map.Property(r => r.SecondaryLanguage).NotAnalyzedNoNorms();
             map.Property(r => r.SecondaryLanguageType).NotAnalyzedNoNorms();
             map.Property(r => r.DateTags).ToField("DateTag");
+            map.Property(r => r.Text).Analyzed().Stored().WithTermVector.PositionsAndOffsets();
             return map;
         }
     }
