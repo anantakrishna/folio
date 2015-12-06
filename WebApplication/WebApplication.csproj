@@ -187,6 +187,7 @@
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
+    <Compile Include="Controllers\CrawlerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RecordController.cs" />
@@ -275,6 +276,8 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Calendar\List.cshtml" />
+    <Content Include="Views\Crawler\Resources.cshtml" />
+    <Content Include="Views\Crawler\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -286,6 +289,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Crawler\Crawler.csproj">
+      <Project>{443b6513-665a-4e1f-8393-9986f3227dd8}</Project>
+      <Name>Crawler</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Domain\Domain.csproj">
       <Project>{20bdc47f-e3f9-42d8-94b9-bf98963599c2}</Project>
       <Name>Domain</Name>

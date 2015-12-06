@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Folio.Resource>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Source)
+        </th>
+        <th>@Html.DisplayNameFor(model => model.DateTags)</th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PrimaryLanguage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SecondaryLanguage)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Source)
+            </td>
+            <td>
+                @String.Join(", ", item.DateTags.ToArray())
+            </td>
+            <td>
+                <a href="@item.Url">
+                    @Html.DisplayFor(modelItem => item.Title)
+                </a>
+            </td>
+            <td>
+                @Html.Raw(item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrimaryLanguage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SecondaryLanguage)
+            </td>
+        </tr>
+    }
+
+</table>

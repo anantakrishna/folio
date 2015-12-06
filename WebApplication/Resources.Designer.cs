@@ -88,6 +88,15 @@ namespace Folio.Web {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Crawling has been finished successfully. {0} records processed..
+        /// </summary>
+        public static string CrawlingFinished {
+            get {
+                return ResourceManager.GetString("CrawlingFinished", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This it not implemented yet..
         /// </summary>
         public static string NotImplemented {

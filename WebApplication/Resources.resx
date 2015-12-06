@@ -126,6 +126,9 @@
   <data name="ContactTitle" xml:space="preserve">
     <value>Contact</value>
   </data>
+  <data name="CrawlingFinished" xml:space="preserve">
+    <value>Crawling has been finished successfully. {0} records processed.</value>
+  </data>
   <data name="NotImplemented" xml:space="preserve">
     <value>This it not implemented yet.</value>
   </data>
