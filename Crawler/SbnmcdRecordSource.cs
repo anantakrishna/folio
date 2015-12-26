@@ -8,9 +8,9 @@ using System.Text;
 
 namespace Folio
 {
-    public class SbnmcdCrawler : ICrawler
+    public class SbnmcdRecordSource : RecordSource
     {
-        public string Description
+        public override string Name
         {
             get
             {
@@ -19,9 +19,8 @@ namespace Folio
         }
 
         private readonly Uri rootUrl = new Uri("http://sbnmcd.org/all_mp3/");
-        private const string SourceName = "sbnmcd.org";
 
-        public IEnumerable<Resource> Execute()
+        public override IEnumerable<Resource> FetchAll()
         {
             HttpClient http = new HttpClient();
             var response = http.GetByteArrayAsync(rootUrl);
@@ -40,7 +39,7 @@ namespace Folio
                     Url = url,
                     Title = link.InnerText,
                     Type = RecordType.Audio,
-                    Source = SourceName,
+                    Source = Name,
                     DateTags = DateTag.Find(link.InnerText),
                 };
         }

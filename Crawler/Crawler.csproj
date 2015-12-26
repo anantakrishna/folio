@@ -129,13 +129,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EnumerableExtensions.cs" />
-    <Compile Include="ICrawler.cs" />
+    <Compile Include="RecordSource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PurebhaktiComCrawler.cs" />
+    <Compile Include="PurebhaktiComRecordSource.cs" />
+    <Compile Include="PurebhaktiRuRecordSource.cs" />
+    <Compile Include="RecordSourceList.cs" />
     <Compile Include="ResourceMapping.cs" />
-    <Compile Include="SbnmcdCrawler.cs" />
-    <Compile Include="YouTubeCrawler.cs" />
-    <Compile Include="YouTubeSource.cs" />
+    <Compile Include="SbnmcdRecordSource.cs" />
+    <Compile Include="YouTubeRecordSource.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

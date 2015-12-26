@@ -3,39 +3,43 @@ using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace Folio
 {
-    public class YouTubeCrawler : ICrawler
+    public class YouTubeRecordSource : RecordSource
     {
-        private readonly YouTubeSource source;
+        public string PrimaryLanguage { get; set; }
+        public string SecondaryLanguage { get; set; }
+        public LanguageType PrimaryLanguageType { get; set; }
+        public LanguageType SecondaryLanguageType { get; set; }
 
-        public YouTubeCrawler(YouTubeSource source)
+        private readonly string playlistId;
+        private readonly string name;
+
+        public YouTubeRecordSource(string playlistId, string name)
         {
-            if (source == null)
-                throw new ArgumentNullException("source");
-
-            this.source = source;
+            this.playlistId = playlistId;
+            this.name = name;
         }
 
-        public string Description
+        protected string SourceId
         {
             get
             {
-                return source.Comment;
+                return string.Format("https://www.youtube.com/playlist?list={0}", playlistId);
             }
         }
 
-        public IEnumerable<Resource> Execute()
+        public override string Name
         {
-            Trace.WriteLine("Starting " + source.PlaylistId);
-            return CrawlPlaylist(source.PlaylistId);
+            get
+            {
+                return name;
+            }
         }
 
-        private IEnumerable<Resource> CrawlPlaylist(string playlistId)
+        public override IEnumerable<Resource> FetchAll()
         {
             return
                 from videoIdChunk in GetPlaylistVideoIds(playlistId)
@@ -43,14 +47,14 @@ namespace Folio
                 from video in videoChunk
                 select new Resource
                 {
-                    Source = source.SourceId,
+                    Source = SourceId,
                     Type = RecordType.Video,
                     Id = video.Id,
                     Url = new Uri(String.Format("https://www.youtube.com/watch?v={0}", video.Id)),
-                    PrimaryLanguage = source.PrimaryLanguage,
-                    PrimaryLanguageType = source.PrimaryLanguageType,
-                    SecondaryLanguage = source.SecondaryLanguage,
-                    SecondaryLanguageType = source.SecondaryLanguageType,
+                    PrimaryLanguage = PrimaryLanguage,
+                    PrimaryLanguageType = PrimaryLanguageType,
+                    SecondaryLanguage = SecondaryLanguage,
+                    SecondaryLanguageType = SecondaryLanguageType,
                     Title = video.Snippet.Title,
                     Description = video.Snippet.Description,
                     DateTags = GetDateTags(video).Distinct().ToArray(),

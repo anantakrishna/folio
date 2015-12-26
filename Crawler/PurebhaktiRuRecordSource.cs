@@ -11,66 +11,65 @@ using System.Text.RegularExpressions;
 
 namespace Folio
 {
-    public class PurebhaktiComCrawler : ICrawler
+    public class PurebhaktiRuRecordSource : RecordSource
     {
-        private static readonly Uri sitemapUrl = new Uri(@"http://www.purebhakti.com/resources/sitemap.html");
+        private static readonly Uri rootpUrl = new Uri(@"http://purebhakti.ru/index.php?option=com_content&view=category&id=5&Itemid=4&limit=0");
 
-        private const string SourceName = @"purebhakti.com";
-        public string Description
+        public override string Name
         {
             get
             {
-                return "purebhakti.com";
+                return "purebhakti.ru";
             }
         }
 
-        public IEnumerable<Resource> Execute()
+        public override IEnumerable<Resource> FetchAll()
         {
-            var doc = GetDocument(sitemapUrl);
+            var doc = GetDocument(rootpUrl);
 
-            var links = doc.DocumentNode.SelectNodes("//div[@id='xmap']//li/a[@title='Bhakti Discourses']/../ul/li/ul/li/a");
+            var links = doc.DocumentNode.SelectNodes("//div[@class='bodycontent']//table[@class='category']//tr/td[2]/a");
 
             return
                 from link in links.EmptyIfNull()
                 where link.Attributes["href"] != null
-                let url = new Uri(sitemapUrl, link.Attributes["href"].Value)
+                let url = new Uri(rootpUrl, link.Attributes["href"].Value)
                 let resource = GetResource(url)
                 where resource != null
                 select resource;
         }
 
-        private static readonly Regex itemUrlRegex = new Regex(@"\/(\d+)-[^/]*\.html$");
+        private static readonly Regex itemUrlRegex = new Regex(@"\bid=(\d+)");
 
         private Resource GetResource(Uri url)
         {
-            Trace.WriteLine(url.AbsolutePath);
-            var match = itemUrlRegex.Match(url.AbsolutePath);
+            Trace.WriteLine(url.PathAndQuery);
+            var match = itemUrlRegex.Match(url.Query);
             if (!match.Success)
                 return null;
 
             var id = match.Groups[1].Value;
             var document = GetDocument(url);
-            var article = document.DocumentNode.SelectSingleNode("//article");
+            var article = document.DocumentNode.SelectSingleNode("//div[@class='full-article']");
 
             if (article == null)
                 return null;
 
-            article.SelectSingleNode("ul[@class='actions']").Remove();
+            article.SelectSingleNode("//div[@class='socbuttons']").Remove();
             return new Resource
             {
                 Id = id,
                 Url = url,
                 Title = ExtractTitle(article),
                 Type = RecordType.Text,
-                Source = SourceName,
-                Text = article.InnerText,
+                Source = Name,
+                Text = ExtractText(article),
                 DateTags = ExtractDateTags(article),
             };
         }
 
         private static string ExtractTitle(HtmlNode article)
         {
-            var titleNode = article.SelectSingleNode("h2");
+            var titleNode = article.SelectSingleNode("//h2[@class='contentheading']");
             if (titleNode == null)
                 return null;
             return titleNode.InnerText.Trim();
@@ -78,21 +77,12 @@ namespace Folio
 
         private static string ExtractText(HtmlNode article)
         {
-            var paragraphs =
-                from p in article.SelectNodes("p")
-                select p.InnerText.Trim();
-            return String.Join("\n", paragraphs.ToArray());
+            return article.InnerText;
         }
 
         private static IEnumerable<DateTag> ExtractDateTags(HtmlNode article)
         {
-            var dateNode = article.SelectSingleNode("dl[@class='article-info']/dd[@class='create']");
-            if (dateNode == null)
-                yield break;
-
-            DateTime date;
-            if (DateTime.TryParse(dateNode.InnerText.Trim(), CultureInfo.GetCultureInfo("en-US"), DateTimeStyles.AllowWhiteSpaces, out date))
-                yield return DateTag.FromDate(date);
+            return DateTag.Find(article.InnerText);
         }
 
         private static HtmlDocument GetDocument(Uri url)

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Folio.Web.Controllers
@@ -24,10 +22,11 @@ namespace Folio.Web.Controllers
             return View();
         }
 
-        public ActionResult PureBhaktiCom()
+        [Route("preview/{name}")]
+        public ActionResult Preview(string name)
         {
-            var crawler = new PurebhaktiComCrawler();
-            var resources = crawler.Execute();
+            var source = RecordSourceList.GetByName(name);
+            var resources = source.FetchAll();
             return View("Resources", resources);
         }
 
@@ -35,25 +34,14 @@ namespace Folio.Web.Controllers
         public ActionResult Crawl()
         {
             var records = (
-                from crawler in Crawlers
-                from record in crawler.Execute()
+                from source in RecordSourceList.All
+                from record in source.FetchAll()
                 select record
                 ).ToArray();
 
             repository.Add(records);
             TempData["SuccessMessage"] = String.Format(Resources.CrawlingFinished, records.Count());
             return RedirectToAction("Index");
-        }
-
-        private static IEnumerable<ICrawler> Crawlers
-        {
-            get
-            {
-                yield return new PurebhaktiComCrawler();
-                yield return new SbnmcdCrawler();
-                foreach (var youtubeSource in YouTubeSource.All)
-                    yield return new YouTubeCrawler(youtubeSource);
-            }
         }
     }
 }
