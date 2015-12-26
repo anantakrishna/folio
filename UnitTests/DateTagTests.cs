@@ -59,6 +59,9 @@ namespace UnitTests
             yield return new object[] { @"6 October, 2009. Today", new DateTag[] { "2009-10-06" } };
             yield return new object[] { @"10 23 96 BVN Gaudiya Math 01 final", new DateTag[] { "1996-10-23" } };
 
+            yield return new object[] { @"4 июля 2006 года", new DateTag[] { "2006-07-04" } };
+
+
             //yield return new object[] { @"", new DateTag[] {""} };
             //yield return new object[] { @"", new DateTag[] {""} };
             //yield return new object[] { @"", new DateTag[] {""} };

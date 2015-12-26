@@ -138,7 +138,7 @@ namespace Folio
         };
 
         private const string EnglishMonthPattern = @"(Jan(uary)?|Feb(ruary)?|Mar(ch)?|Apr(il)?|May|June?|July?|Aug(ust)?|Sep(t(ember)?)?|Oct(ober)?|Nov(ember)?|Dec(ember)?)";
-        private const string RussianMonthPattern = @"(Янв(арь)?|Фев(раль)?|Март?|Апр(ель)?|Май|Июнь|Июль|Авг(уст)?|Сен(т(ябрь)?)?|Окт(ябрь)?|Ноя(брь)?|Дек(абрь)?)";
+        private const string RussianMonthPattern = @"(Янв(ар(ь|я))?|Фев(рал(ь|я))?|Мар(та?)?|Апр(ел(ь|я))?|Ма(й|я)|Июн(ь|я)|Июл(ь|я)|Авг(уста?)?|Сен(т(ябр(ь|я))?)?|Окт(ябр(ь|я))?|Ноя(бр(ь|я))?|Дек(абр(ь|я))?)";
         private const string MonthPattern = "(" + EnglishMonthPattern + "|" + RussianMonthPattern + ")";
 
         private static readonly string[] patternsSimplified =
