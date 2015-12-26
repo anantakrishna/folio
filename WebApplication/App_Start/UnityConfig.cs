@@ -1,6 +1,10 @@
-using System;
+using Lucene.Net.Store;
+using Lucene.Net.Store.Azure;
 using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.Configuration;
+using Microsoft.WindowsAzure.Storage;
+using System;
+using System.IO;
+using System.Web.Configuration;
 
 namespace Folio.Web.App_Start
 {
@@ -32,7 +36,15 @@ namespace Folio.Web.App_Start
         /// change the defaults), as Unity allows resolving a concrete type even if it was not previously registered.</remarks>
         public static void RegisterTypes(IUnityContainer container)
         {
-            container.RegisterType<IResourceRepository, Storage.RecordRepository>(new HierarchicalLifetimeManager(), new InjectionConstructor());
+            var indexStorageCS = WebConfigurationManager.ConnectionStrings["IndexStorage"];
+            if (indexStorageCS != null)
+            {
+                container.RegisterInstance<Lucene.Net.Store.Directory>(new AzureDirectory(CloudStorageAccount.Parse(indexStorageCS.ConnectionString), "records", new RAMDirectory()));
+            }
+            else
+                container.RegisterInstance<Lucene.Net.Store.Directory>(FSDirectory.Open(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData, Environment.SpecialFolderOption.Create), "PureBhakti", "Folio", "records")));
+
+            container.RegisterType<IResourceRepository, Storage.RecordRepository>(new HierarchicalLifetimeManager());
         }
     }
 }

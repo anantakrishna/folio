@@ -1,15 +1,11 @@
-﻿using Lucene.Net.Analysis;
-using Lucene.Net.Linq;
+﻿using Lucene.Net.Linq;
 using Lucene.Net.Linq.Fluent;
 using Lucene.Net.Linq.Mapping;
 using Lucene.Net.Search;
 using Lucene.Net.Store;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Folio.Storage
 {
@@ -20,14 +16,9 @@ namespace Folio.Storage
 
         private const Lucene.Net.Util.Version LuceneVersion = Lucene.Net.Util.Version.LUCENE_30;
 
-        public RecordRepository()
-            : this(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData, Environment.SpecialFolderOption.Create), "PureBhakti", "Folio", "records"))
+        public RecordRepository(Directory directory)
         {
-        }
-
-        public RecordRepository(string path)
-        {
-            this.provider = new LuceneDataProvider(FSDirectory.Open(path), LuceneVersion);
+            this.provider = new LuceneDataProvider(directory, LuceneVersion);
             this.mapper = CreateMap().ToDocumentMapper();
         }
 
